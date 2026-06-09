@@ -1,0 +1,433 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Telangana Property Value Calculator</title>
+
+<style>
+
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family:'Segoe UI',sans-serif;
+}
+
+body{
+    min-height:100vh;
+    display:flex;
+    justify-content:center;
+    align-items:flex-start;
+    overflow-y:auto;
+    overflow-x:hidden;
+    padding:30px 15px;
+    background:linear-gradient(-45deg,#0f172a,#1e3a8a,#2563eb,#0ea5e9);
+    background-size:400% 400%;
+    animation:gradient 12s ease infinite;
+}
+
+@keyframes gradient{
+    0%{background-position:0% 50%;}
+    50%{background-position:100% 50%;}
+    100%{background-position:0% 50%;}
+}
+
+.circle{
+    position:fixed;
+    border-radius:50%;
+    background:rgba(255,255,255,0.08);
+}
+
+.c1{
+    width:250px;
+    height:250px;
+    top:-60px;
+    left:-60px;
+}
+
+.c2{
+    width:220px;
+    height:220px;
+    bottom:-40px;
+    right:-40px;
+}
+
+.c3{
+    width:180px;
+    height:180px;
+    top:40%;
+    left:5%;
+}
+
+.container{
+    width:100%;
+    max-width:900px;
+    padding:35px;
+    border-radius:25px;
+    background:rgba(255,255,255,0.12);
+    backdrop-filter:blur(20px);
+    border:1px solid rgba(255,255,255,0.2);
+    box-shadow:0 10px 40px rgba(0,0,0,.25);
+    color:white;
+    z-index:10;
+}
+
+.header{
+    text-align:center;
+    margin-bottom:25px;
+}
+
+.header h1{
+    font-size:34px;
+    margin-bottom:8px;
+}
+
+.header p{
+    opacity:.9;
+}
+
+.badge{
+    display:inline-block;
+    margin-top:12px;
+    background:#16a34a;
+    color:#fff;
+    padding:10px 18px;
+    border-radius:50px;
+    font-size:14px;
+    font-weight:700;
+}
+
+label{
+    display:block;
+    margin-top:15px;
+    margin-bottom:8px;
+    font-weight:600;
+}
+
+select,input{
+    width:100%;
+    padding:14px;
+    border:none;
+    border-radius:12px;
+    font-size:16px;
+    outline:none;
+}
+
+button{
+    width:100%;
+    margin-top:20px;
+    padding:15px;
+    border:none;
+    border-radius:12px;
+    font-size:18px;
+    font-weight:bold;
+    cursor:pointer;
+    transition:.3s;
+}
+
+.calc-btn{
+    background:linear-gradient(45deg,#00c6ff,#0072ff);
+    color:white;
+}
+
+.calc-btn:hover{
+    transform:translateY(-3px);
+}
+
+.report{
+    display:none;
+    margin-top:30px;
+    background:#ffffff;
+    color:#111827;
+    border-radius:20px;
+    padding:30px;
+    border:3px solid #2563eb;
+    box-shadow:0 15px 35px rgba(37,99,235,.25);
+}
+
+.report h2{
+    text-align:center;
+    color:#1d4ed8;
+    margin-bottom:25px;
+    font-size:30px;
+    font-weight:800;
+    text-transform:uppercase;
+}
+
+.row{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    padding:16px 20px;
+    margin-bottom:12px;
+    background:#f8fafc;
+    border-left:6px solid #2563eb;
+    border-radius:12px;
+}
+
+.row strong{
+    color:#111827;
+}
+
+.row span{
+    color:#1d4ed8;
+    font-weight:700;
+}
+
+.total-box{
+    margin-top:25px;
+    padding:35px;
+    text-align:center;
+    border-radius:20px;
+    background:linear-gradient(135deg,#2563eb,#1e40af);
+    color:white;
+    box-shadow:0 15px 30px rgba(37,99,235,.35);
+}
+
+.total-box h3{
+    margin-bottom:15px;
+    font-size:22px;
+}
+
+.total{
+    font-size:60px;
+    font-weight:900;
+}
+
+.buttons{
+    display:flex;
+    gap:10px;
+    margin-top:20px;
+}
+
+.print-btn{
+    background:#10b981;
+    color:white;
+}
+
+.reset-btn{
+    background:#ef4444;
+    color:white;
+}
+
+.footer{
+    text-align:center;
+    margin-top:20px;
+    color:#64748b;
+    font-size:14px;
+}
+
+@media(max-width:600px){
+
+    .container{
+        padding:20px;
+    }
+
+    .header h1{
+        font-size:26px;
+    }
+
+    .buttons{
+        flex-direction:column;
+    }
+
+    .total{
+        font-size:40px;
+    }
+
+    .row{
+        flex-direction:column;
+        gap:6px;
+        text-align:center;
+    }
+}
+
+/* PRINT DESIGN */
+
+@media print{
+
+body{
+    background:#fff !important;
+    padding:0;
+}
+
+.circle,
+.header,
+.calc-btn,
+.buttons{
+    display:none !important;
+}
+
+.container{
+    width:100%;
+    max-width:100%;
+    background:#fff !important;
+    border:none !important;
+    box-shadow:none !important;
+    padding:0;
+}
+
+.report{
+    display:block !important;
+    border:2px solid #000;
+    box-shadow:none;
+}
+
+.total-box{
+    background:#f3f4f6 !important;
+    color:#000 !important;
+    border:2px solid #000;
+}
+
+.total{
+    color:#000 !important;
+}
+
+.footer{
+    color:#000 !important;
+}
+}
+
+</style>
+</head>
+
+<body>
+
+<div class="circle c1"></div>
+<div class="circle c2"></div>
+<div class="circle c3"></div>
+
+<div class="container">
+
+<div class="header">
+<h1>🏡 Telangana Property Value Calculator</h1>
+<p>SRO Champapet Updated Registration Market Values</p>
+<div class="badge">✔ Updated 2026 Rates</div>
+</div>
+
+<label>📍 Select Location</label>
+
+<select id="location">
+<option value="7400">Balapur - ₹7,400</option>
+<option value="10500">Jalpally - ₹10,500</option>
+<option value="7700">Kothapet - ₹7,700</option>
+<option value="7200">Kurmalguda - ₹7,200</option>
+<option value="13000">Mamidipally - ₹13,000</option>
+<option value="7400">Nadergul - ₹7,400</option>
+<option value="8100">Gurramguda - ₹8,100</option>
+<option value="7400">Shivaraj Sagar Pump - ₹7,400</option>
+<option value="10700">Papaya Kumandan - ₹10,700</option>
+<option value="7200">Renukapur - ₹7,200</option>
+<option value="7200">Venkatapur - ₹7,200</option>
+<option value="24500">Champapet - ₹24,500</option>
+<option value="30500">Sulthan Valva - ₹30,500</option>
+<option value="30500">Tummala Kunta - ₹30,500</option>
+</select>
+
+<label>📐 Area (Sq. Yards)</label>
+<input type="number" id="yards" placeholder="Enter plot area">
+
+<button class="calc-btn" onclick="calculate()">
+💰 Calculate Property Value
+</button>
+
+<div class="report" id="report">
+
+<h2>Property Valuation Report</h2>
+
+<div class="row">
+<strong>Location</strong>
+<span id="loc"></span>
+</div>
+
+<div class="row">
+<strong>Area</strong>
+<span id="area"></span>
+</div>
+
+<div class="row">
+<strong>Government Rate</strong>
+<span id="rate"></span>
+</div>
+
+<div class="total-box">
+<h3>Government Market Value</h3>
+<div class="total" id="total">₹0</div>
+</div>
+
+<div class="buttons">
+<button class="print-btn" onclick="window.print()">🖨 Print Report</button>
+<button class="reset-btn" onclick="resetForm()">🔄 Reset</button>
+</div>
+
+<div class="footer">
+Based on Updated SRO Champapet Registration Market Values
+</div>
+
+</div>
+
+</div>
+
+<script>
+
+function animateValue(finalValue){
+
+let current=0;
+let increment=Math.ceil(finalValue/100);
+
+let interval=setInterval(function(){
+
+current+=increment;
+
+if(current>=finalValue){
+current=finalValue;
+clearInterval(interval);
+}
+
+document.getElementById("total").innerHTML=
+"₹ "+current.toLocaleString('en-IN');
+
+},15);
+}
+
+function calculate(){
+
+let location=document.getElementById("location");
+let rate=parseInt(location.value);
+
+let yards=parseFloat(document.getElementById("yards").value);
+
+if(!yards || yards<=0){
+alert("Please enter valid plot area.");
+return;
+}
+
+let total=rate*yards;
+
+document.getElementById("loc").innerHTML=
+location.options[location.selectedIndex].text;
+
+document.getElementById("area").innerHTML=
+yards.toLocaleString('en-IN')+" Sq. Yards";
+
+document.getElementById("rate").innerHTML=
+"₹ "+rate.toLocaleString('en-IN')+" / Sq. Yard";
+
+document.getElementById("report").style.display="block";
+
+animateValue(total);
+}
+
+function resetForm(){
+
+document.getElementById("yards").value="";
+document.getElementById("report").style.display="none";
+document.getElementById("total").innerHTML="₹0";
+
+}
+
+</script>
+
+</body>
+</html>
